@@ -26,3 +26,11 @@ class NewsLetter(models.Model):
 
     def __str__(self):
         return self.email
+
+
+class Gallery(models.Model):
+    name = models.CharField(max_length=200, blank=True)
+    image = models.ImageField(null=True, blank=True, default='/sample.jpeg')
+
+    def __str__(self):
+        return self.name
