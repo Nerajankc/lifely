@@ -48,6 +48,35 @@ def todos(request):
 
 
 @login_required(login_url='login')
+def editTodo(request, pk):
+    todo = Todos.objects.get(id=pk)
+    print(todo.title)
+    form = TodosForm(request.POST)
+    todos = Todos.objects.filter(user=request.user).order_by('-id')
+    if request.method == 'POST':
+        form = TodosForm(request.POST)
+        todo.title = form.data['title']
+        todo.description = form.data['description']
+        todo.save()
+        return redirect('user-todos')
+    return render(request, "user_side/edit_todo.html", {
+        "todos": todos,
+        'form': form,
+        "todo": todo
+    })
+
+
+@login_required(login_url='login')
+def todo(request, pk):
+    item = Todos.objects.get(id=pk)
+    todos = Todos.objects.filter(user=request.user).order_by('-id')
+    return render(request, "user_side/todo.html", {
+        "todo": item,
+        "todos": todos,
+    })
+
+
+@login_required(login_url='login')
 def events(request):
     form = EventsForm
     if request.method == 'POST':

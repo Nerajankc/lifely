@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Todos
+{% endblock title %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static "user_side/css/app.css" %}">
+{% endblock links %}
+
+{% block content %}
+    {% include 'user_side/includes/navbar.html' %}
+    <main class="container mx-auto relative">
+        {% include 'user_side/includes/sidebar.html' %}
+        <div id="main-body" class='py-10 md:px-2 relative flex justify-between'>
+            <div class="todo-input-container md:p-5">
+                <h1 class="text-3xl font-medium text-blue-600">Edit Todo</h1>
+                <form method="POST" class='my-5'>
+                    {% csrf_token %}
+                    <div class="form-control my-2">
+                        <label for="title" class="leading-7 font-medium text-m text-blue-500">Title</label>
+                        <input type="text" name='title' value={{todo.title}} placeholder="Title" class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <div class="form-control my-2">
+                        <label for="description" class="leading-7 font-medium text-m text-blue-500">Description</label>
+                        <textarea name="description" placeholder="Description" class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                        {{todo.description}}
+                        </textarea>
+                    </div>
+                    <button type="submit" class="w-full mt-5 text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">Update</button>
+                </form>
+            </div>
+        </div>
+    </main>
+{% endblock %}

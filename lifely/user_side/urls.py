@@ -5,6 +5,8 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('', views.profile, name='user-profile'),
     path('todos', views.todos, name='user-todos'),
+    path('todos/<int:pk>/', views.todo, name='user-todo'),
+    path('todos-edit/<int:pk>/', views.editTodo, name='user-todo-edit'),
     path('todo-delete/<int:pk>/',
          views.deleteTodo, name='user-todo-delete'),
     path('events', views.events, name='user-events'),
