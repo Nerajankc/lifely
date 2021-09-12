@@ -50,14 +50,14 @@ def todos(request):
 @login_required(login_url='login')
 def editTodo(request, pk):
     todo = Todos.objects.get(id=pk)
-    print(todo.title)
     form = TodosForm(request.POST)
     todos = Todos.objects.filter(user=request.user).order_by('-id')
     if request.method == 'POST':
         form = TodosForm(request.POST)
-        todo.title = form.data['title']
-        todo.description = form.data['description']
-        todo.save()
+        if(str(form.data['title']) != "" and str(form.data['description']) != ""):
+            todo.title = form.data['title']
+            todo.description = form.data['description']
+            todo.save()
         return redirect('user-todos')
     return render(request, "user_side/edit_todo.html", {
         "todos": todos,
@@ -107,6 +107,37 @@ def passwords(request):
     return render(request, "user_side/password_manager.html", {
         "passwords": passwords,
         'form': form
+    })
+
+
+@login_required(login_url='login')
+def viewPassword(request, pk):
+    passwords = Passwords.objects.filter(user=request.user).order_by('-id')
+    item = Passwords.objects.get(id=pk)
+    return render(request, "user_side/password_view.html", {
+        "passwords": passwords,
+        'password': item
+    })
+
+
+@login_required(login_url='login')
+def editPassword(request, pk):
+    item = Passwords.objects.get(id=pk)
+    form = PasswordForm(request.POST)
+    passwords = Passwords.objects.filter(user=request.user).order_by('-id')
+    if request.method == 'POST':
+        form = PasswordForm(request.POST)
+        print(str(form.data['username']) == "")
+        print(str(form.data['password']))
+        if(str(form.data['username']) != "" and str(form.data['password']) != ""):
+            item.username = form.data['username']
+            item.password = form.data['password']
+            item.save()
+        return redirect('user-passwords')
+    return render(request, "user_side/edit_password.html", {
+        "passwords": passwords,
+        'form': form,
+        "password": item
     })
 
 
