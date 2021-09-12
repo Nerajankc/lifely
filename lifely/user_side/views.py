@@ -94,6 +94,37 @@ def events(request):
 
 
 @login_required(login_url='login')
+def eventPreview(request, pk):
+    item = Events.objects.get(id=pk)
+    events = Events.objects.filter(user=request.user).order_by('-id')
+    return render(request, "user_side/events_preview.html", {
+        "events": events,
+        'event': item
+    })
+
+
+@login_required(login_url='login')
+def eventEdit(request, pk):
+    event = Events.objects.get(id=pk)
+    form = PasswordForm(request.POST)
+    events = Events.objects.filter(user=request.user).order_by('-id')
+    if request.method == 'POST':
+        form = PasswordForm(request.POST)
+        if(str(form.data['title']) != "" and str(form.data['email']) != "" and str(form.data['alert_time']) != "" and str(form.data['description']) != ""):
+            event.title = form.data['title']
+            event.email = form.data['email']
+            event.alert_time = form.data['alert_time']
+            event.description = form.data['description']
+            event.save()
+        return redirect('user-events')
+    return render(request, "user_side/edit_event.html", {
+        "events": events,
+        'form': form,
+        "event": event
+    })
+
+
+@login_required(login_url='login')
 def passwords(request):
     form = PasswordForm
     if request.method == 'POST':
@@ -127,8 +158,6 @@ def editPassword(request, pk):
     passwords = Passwords.objects.filter(user=request.user).order_by('-id')
     if request.method == 'POST':
         form = PasswordForm(request.POST)
-        print(str(form.data['username']) == "")
-        print(str(form.data['password']))
         if(str(form.data['username']) != "" and str(form.data['password']) != ""):
             item.username = form.data['username']
             item.password = form.data['password']
