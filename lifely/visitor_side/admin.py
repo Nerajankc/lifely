@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Aboutus, FeedBacks, NewsLetter
+from .models import Aboutus, FeedBacks, NewsLetter, Gallery
 
 
 admin.site.register(Aboutus)
@@ -15,3 +15,6 @@ class FeedBacksAdmin(admin.ModelAdmin):
 admin.site.register(FeedBacks, FeedBacksAdmin)
 
 admin.site.register(NewsLetter)
+
+
+admin.site.register(Gallery)
