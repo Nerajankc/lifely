@@ -15,29 +15,28 @@ Events
         {% include 'user_side/includes/sidebar.html' %}
         <div id="main-body" class='py-10 md:px-5 relative flex justify-between'>
             <div class="events-input-container md:p-5">
-                <h1 class="text-3xl font-medium text-blue-600">EVENTS</h1>
+                <h1 class="text-3xl font-medium text-blue-600">Edit Events</h1>
                 <form method="POST" class='my-5'>
                     {% csrf_token %}
                     <div class="form-control my-2">
                         <label for="title" class="leading-7 font-medium text-m text-blue-500">Title</label>
-                        {{form.title}}
-                        {{form.title.errors}}
+                        <input type="text" name='title' value={{event.title}} placeholder='Title' class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                     </div>
                     <div class="form-control my-2">
                         <label for="email" class="leading-7 font-medium text-m text-blue-500">Email</label>
-                        {{form.email}}
-                        {{form.email.errors}}
+                        <input type="email" name='email' value={{event.email}} placeholder="Email" class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                     </div>
                     <div class="form-control my-2">
                         <label for="time" class="leading-7 font-medium text-m text-blue-500">Alert Time</label>
-                        <input type="datetime-local" id="id_alert_time" name="alert_time" class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                        <input type="datetime-local" id="id_alert_time" value={{event.alert_time}} name="alert_time" class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                     </div>
                     <div class="form-control my-2">
                         <label for="description" class="leading-7 font-medium text-m text-blue-500">Description</label>
-                        {{form.description}}
-                        {{form.description.errors}} 
+                        <textarea name="description" placeholder="Description" class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            {{event.description}}
+                        </textarea> 
                     </div>
-                    <button type="submit" class="w-full mt-5 text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">Add</button>
+                    <button type="submit" class="w-full mt-5 text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">Update</button>
                 </form>
             </div>
             <div class="events-list-container md:p-5">

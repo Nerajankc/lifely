@@ -14,31 +14,14 @@ Events
     <main class="container mx-auto relative">
         {% include 'user_side/includes/sidebar.html' %}
         <div id="main-body" class='py-10 md:px-5 relative flex justify-between'>
-            <div class="events-input-container md:p-5">
-                <h1 class="text-3xl font-medium text-blue-600">EVENTS</h1>
-                <form method="POST" class='my-5'>
-                    {% csrf_token %}
-                    <div class="form-control my-2">
-                        <label for="title" class="leading-7 font-medium text-m text-blue-500">Title</label>
-                        {{form.title}}
-                        {{form.title.errors}}
-                    </div>
-                    <div class="form-control my-2">
-                        <label for="email" class="leading-7 font-medium text-m text-blue-500">Email</label>
-                        {{form.email}}
-                        {{form.email.errors}}
-                    </div>
-                    <div class="form-control my-2">
-                        <label for="time" class="leading-7 font-medium text-m text-blue-500">Alert Time</label>
-                        <input type="datetime-local" id="id_alert_time" name="alert_time" class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                    </div>
-                    <div class="form-control my-2">
-                        <label for="description" class="leading-7 font-medium text-m text-blue-500">Description</label>
-                        {{form.description}}
-                        {{form.description.errors}} 
-                    </div>
-                    <button type="submit" class="w-full mt-5 text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">Add</button>
-                </form>
+            <div class="w-1/2">
+                <h1 class="text-3xl font-medium text-blue-600">Event</h1>
+                <div class="my-5">
+                    <h3 class="text-2xl text-gray-600 my-3">Title: <span class="text-gray-900 font-bold ml-5">{{event.title}}</span></h3>
+                    <h3 class="text-2xl text-gray-600 my-3">Email: <span class="text-xl text-gray-900 font-bold ml-5">{{event.email}}</span></h3>
+                    <h3 class="text-2xl text-gray-600 my-3">Date: <span class="text-xl text-gray-900 font-bold ml-5">{{event.alert_time}}</span></h3>
+                    <h3 class="text-2xl text-gray-600 my-3">Description: <span class="text-gray-900 font-normal text-lg block my-2">{{event.description}}</span></h3>
+                </div>
             </div>
             <div class="events-list-container md:p-5">
                 <h1 class="text-2xl font-medium text-blue-600">List</h1>

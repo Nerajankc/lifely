@@ -48,6 +48,35 @@ def todos(request):
 
 
 @login_required(login_url='login')
+def editTodo(request, pk):
+    todo = Todos.objects.get(id=pk)
+    form = TodosForm(request.POST)
+    todos = Todos.objects.filter(user=request.user).order_by('-id')
+    if request.method == 'POST':
+        form = TodosForm(request.POST)
+        if(str(form.data['title']) != "" and str(form.data['description']) != ""):
+            todo.title = form.data['title']
+            todo.description = form.data['description']
+            todo.save()
+        return redirect('user-todos')
+    return render(request, "user_side/edit_todo.html", {
+        "todos": todos,
+        'form': form,
+        "todo": todo
+    })
+
+
+@login_required(login_url='login')
+def todo(request, pk):
+    item = Todos.objects.get(id=pk)
+    todos = Todos.objects.filter(user=request.user).order_by('-id')
+    return render(request, "user_side/todo.html", {
+        "todo": item,
+        "todos": todos,
+    })
+
+
+@login_required(login_url='login')
 def events(request):
     form = EventsForm
     if request.method == 'POST':
@@ -65,6 +94,37 @@ def events(request):
 
 
 @login_required(login_url='login')
+def eventPreview(request, pk):
+    item = Events.objects.get(id=pk)
+    events = Events.objects.filter(user=request.user).order_by('-id')
+    return render(request, "user_side/events_preview.html", {
+        "events": events,
+        'event': item
+    })
+
+
+@login_required(login_url='login')
+def eventEdit(request, pk):
+    event = Events.objects.get(id=pk)
+    form = PasswordForm(request.POST)
+    events = Events.objects.filter(user=request.user).order_by('-id')
+    if request.method == 'POST':
+        form = PasswordForm(request.POST)
+        if(str(form.data['title']) != "" and str(form.data['email']) != "" and str(form.data['alert_time']) != "" and str(form.data['description']) != ""):
+            event.title = form.data['title']
+            event.email = form.data['email']
+            event.alert_time = form.data['alert_time']
+            event.description = form.data['description']
+            event.save()
+        return redirect('user-events')
+    return render(request, "user_side/edit_event.html", {
+        "events": events,
+        'form': form,
+        "event": event
+    })
+
+
+@login_required(login_url='login')
 def passwords(request):
     form = PasswordForm
     if request.method == 'POST':
@@ -78,6 +138,35 @@ def passwords(request):
     return render(request, "user_side/password_manager.html", {
         "passwords": passwords,
         'form': form
+    })
+
+
+@login_required(login_url='login')
+def viewPassword(request, pk):
+    passwords = Passwords.objects.filter(user=request.user).order_by('-id')
+    item = Passwords.objects.get(id=pk)
+    return render(request, "user_side/password_view.html", {
+        "passwords": passwords,
+        'password': item
+    })
+
+
+@login_required(login_url='login')
+def editPassword(request, pk):
+    item = Passwords.objects.get(id=pk)
+    form = PasswordForm(request.POST)
+    passwords = Passwords.objects.filter(user=request.user).order_by('-id')
+    if request.method == 'POST':
+        form = PasswordForm(request.POST)
+        if(str(form.data['username']) != "" and str(form.data['password']) != ""):
+            item.username = form.data['username']
+            item.password = form.data['password']
+            item.save()
+        return redirect('user-passwords')
+    return render(request, "user_side/edit_password.html", {
+        "passwords": passwords,
+        'form': form,
+        "password": item
     })
 
 
